@@ -27,7 +27,12 @@ public class LeadService {
                 if (isLead.isPresent()) {
                     isLead.get().setFollowUps("updated lead");
                     leadRepo.save(isLead.get());
+                    return ResponseEntity.status(HttpStatus.OK).body("Lead was updated");
                 }
+            }
+            Optional<LeadEntity> existingEmail = leadRepo.findByemail(lead.getEmail());
+            if (existingEmail.isPresent()) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("email was already existed");
             }
             if (lead.getFollowUps() == null) {
                 lead.setFollowUps("new lead");
@@ -75,7 +80,7 @@ public class LeadService {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("lead was not found in this name " + isLead.get().getName());
             }
             LeadEntity lead = isLead.get();
-            if (lead.getFollowUps().equalsIgnoreCase("intrested")) {
+            if (lead.getFollowUps().equalsIgnoreCase("Qualified")) {
                 CustomerEntity newCustomer = new CustomerEntity();
                 newCustomer.setName(lead.getName());
                 newCustomer.setEmail(lead.getEmail());

@@ -85,13 +85,39 @@ public class CustomerService {
 
     public ResponseEntity<?> searchCustomerDetails(String name) {
         try {
-            Optional<CustomerEntity> isCustomerAvailable = customerRepo.findByname(name);
+            List<CustomerEntity> isCustomerAvailable = customerRepo.findByNameContainingIgnoreCase(name);
             if (isCustomerAvailable.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer was not found in this name " + name);
             }
             return ResponseEntity.status(HttpStatus.FOUND).body(isCustomerAvailable);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    public ResponseEntity<?> getAllCustomerCsvReport() {
+        try {
+            List<CustomerEntity> allCustomer = customerRepo.findAll();
+            StringBuilder csvCustomer = new StringBuilder();
+
+            csvCustomer.append("ID ,Name, Email, phonenumber, company, location \n");
+
+            for (CustomerEntity customer : allCustomer) {
+                csvCustomer.append(customer.getId()).append(",")
+                        .append(customer.getName()).append(",")
+                        .append(customer.getEmail()).append(",")
+                        .append(customer.getPhoneNumber()).append(",")
+                        .append(customer.getCompany()).append(",")
+                        .append(customer.getLocation()).append("\n");
+            }
+            byte[] csv = csvCustomer.toString().getBytes();
+            return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=customers_report.csv")
+                    .header("Content-Type", "text/csv")
+                    .body(csv);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+
         }
     }
 }

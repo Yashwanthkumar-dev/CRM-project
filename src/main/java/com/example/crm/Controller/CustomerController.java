@@ -49,8 +49,13 @@ public class CustomerController {
     }
 
     //search customer details by using name
-    @GetMapping("/searchCustomerDetails/{name}")
-    public ResponseEntity<?> searchCustomerDetails(@PathVariable String name) {
+    @GetMapping("/searchCustomerDetails")
+    public ResponseEntity<?> searchCustomerDetails(@RequestParam String name) {
         return customerService.searchCustomerDetails(name);
+    }
+
+    @GetMapping("/customer-csv-report")
+    public ResponseEntity<?>getAllCustomerCsvReport(){
+        return customerService.getAllCustomerCsvReport();
     }
 }

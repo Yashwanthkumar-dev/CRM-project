@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface LeadRepository extends JpaRepository<LeadEntity , Integer> {
+public interface LeadRepository extends JpaRepository<LeadEntity , Integer> { Long countByFollowUps(String followUps);
     Optional<LeadEntity>findByemail(String email);
 }
