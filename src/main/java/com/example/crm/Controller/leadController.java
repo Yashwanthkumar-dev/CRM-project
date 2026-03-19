@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/lead")
+@CrossOrigin(origins = "*")
 public class leadController {
     @Autowired
     private LeadService leadService;
