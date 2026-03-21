@@ -26,5 +26,5 @@ public class CustomerEntity {
     private String location;
     @CreationTimestamp
     private LocalDateTime createdAt;
-    private boolean status;
+
 }
