@@ -12,4 +12,5 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity,Integer
     Optional<CustomerEntity>findByname(String name);
     List<CustomerEntity> findByNameContainingIgnoreCase(String name);
 
+
 }

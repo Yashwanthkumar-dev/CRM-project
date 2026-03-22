@@ -32,9 +32,9 @@ public class CustomerController {
     }
 
     //update customer all details by using name
-    @PutMapping("/updateSingleCustomerAllDetails")
-    public ResponseEntity<?> updateCustomerAllDetails(@RequestParam String oldName, @RequestParam String newName, @RequestParam String email, @RequestParam String phoneNumber, @RequestParam String company, @RequestParam String location) {
-        return customerService.updateCustomerAllDetails(oldName, newName, email, phoneNumber, company, location);
+    @PutMapping("/updateSingleCustomerAllDetails/{id}")
+    public ResponseEntity<?> updateCustomerAllDetails(@PathVariable Integer id , @RequestBody CustomerEntity customer) {
+        return customerService.updateCustomerAllDetails(id,customer);
     }
 
     //    delete all Customer

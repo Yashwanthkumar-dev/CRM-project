@@ -41,18 +41,18 @@ public class CustomerService {
         }
     }
 
-    public ResponseEntity<?> updateCustomerAllDetails(String oldName, String newName, String email, String phoneNumber, String company, String location) {
+    public ResponseEntity<?> updateCustomerAllDetails(Integer id,CustomerEntity customer) {
         try {
-            Optional<CustomerEntity> existingCustomer = customerRepo.findByname(oldName);
+            Optional<CustomerEntity> existingCustomer = customerRepo.findById(id);
             if (existingCustomer.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("customer was not found in this name " + oldName);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("customer was not found ");
             }
             CustomerEntity updateCustomer = existingCustomer.get();
-            updateCustomer.setName(newName);
-            updateCustomer.setEmail(email);
-            updateCustomer.setPhoneNumber(phoneNumber);
-            updateCustomer.setCompany(company);
-            updateCustomer.setLocation(location);
+            updateCustomer.setName(customer.getName());
+            updateCustomer.setEmail(customer.getEmail());
+            updateCustomer.setCompany(customer.getCompany());
+            updateCustomer.setLocation(customer.getLocation());
+            updateCustomer.setPhoneNumber(customer.getPhoneNumber());
             customerRepo.save(updateCustomer);
             return ResponseEntity.status(HttpStatus.OK).body("Customer details was updated successfully");
         } catch (Exception e) {

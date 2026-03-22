@@ -36,5 +36,4 @@ public class LeadEntity {
     @JsonManagedReference
     private List<leadActivityEntity> activities;
 
-
 }

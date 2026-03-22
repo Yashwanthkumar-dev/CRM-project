@@ -51,7 +51,7 @@ public class LeadService {
             if (allLeads.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("leads are not created");
             }
-            return ResponseEntity.status(HttpStatus.FOUND).body(allLeads);
+            return ResponseEntity.status(HttpStatus.OK).body(allLeads);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
