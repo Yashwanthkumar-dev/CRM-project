@@ -26,6 +26,7 @@ public class LeadEntity {
     private String location;
     private String company;
     private String source;
+    private LocalDateTime nextFollowDate;
     @CreationTimestamp
     @Column(updatable = false )
     private LocalDateTime createdAt;
