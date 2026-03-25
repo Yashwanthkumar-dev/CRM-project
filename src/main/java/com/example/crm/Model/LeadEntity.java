@@ -27,7 +27,7 @@ public class LeadEntity {
     private String company;
     private String source;
     @CreationTimestamp
-    @Column(updatable = false , nullable = false)
+    @Column(updatable = false )
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;

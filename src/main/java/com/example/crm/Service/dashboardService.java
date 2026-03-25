@@ -28,7 +28,7 @@ public class dashboardService {
             Long totalLead = leadRepo.count();
             Long totalCustomer = customerRepo.count();
 
-            Long totalInterstedCustomer = leadRepo.countByFollowUps("intersted");
+            Long totalInterstedCustomer = leadRepo.countByFollowUps("interested");
 
             DashboardDto newDashBoard = new DashboardDto();
             newDashBoard.setTotalLeads(totalLead);

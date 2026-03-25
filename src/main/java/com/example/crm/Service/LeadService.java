@@ -95,6 +95,7 @@ public class LeadService {
             newCustomer.setPhoneNumber(lead.getPhone());
             newCustomer.setLocation(lead.getLocation());
             newCustomer.setCompany(lead.getCompany());
+            newCustomer.setStatus(lead.getFollowUps());
 
             customerRepo.save(newCustomer);
             leadRepo.delete(lead);
@@ -127,6 +128,29 @@ public class LeadService {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 
+        }
+    }
+
+    public ResponseEntity<?> deleteSingleLead(Integer id) {
+        try {
+            Optional<LeadEntity> isLead = leadRepo.findById(id);
+            leadRepo.delete(isLead.get());
+            return ResponseEntity.status(HttpStatus.OK).body("Lead was deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    // LeadService.java-la add pannu
+    public ResponseEntity<?> viewLeadById(Integer id) {
+        try {
+            Optional<LeadEntity> lead = leadRepo.findById(id);
+            if (lead.isPresent()) {
+                return ResponseEntity.ok(lead.get()); // Idhula activities-um sethu varum (@OneToMany irundha)
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lead not found");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 }

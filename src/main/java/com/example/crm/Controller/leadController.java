@@ -29,12 +29,22 @@ public class leadController {
     }
 
     @PostMapping("/convert/{id}")
-    public ResponseEntity<?>convertLeadToCustomer(@PathVariable Integer id){
+    public ResponseEntity<?> convertLeadToCustomer(@PathVariable Integer id) {
         return leadService.convertLeadToCustomer(id);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getLeadById(@PathVariable Integer id) {
+        return leadService.viewLeadById(id);
+    }
+
     @DeleteMapping("/deleteAllLeads")
-    public ResponseEntity<?> deleteAllLeads(){
+    public ResponseEntity<?> deleteAllLeads() {
         return leadService.deleteAllLeads();
+    }
+
+    @DeleteMapping("/deleteSingleLead/{id}")
+    public ResponseEntity<?> deleteSingleLead(@PathVariable Integer id) {
+        return leadService.deleteSingleLead(id);
     }
 }
