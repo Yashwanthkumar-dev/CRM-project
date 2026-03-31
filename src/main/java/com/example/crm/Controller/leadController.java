@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @RestController
 @RequestMapping("/lead")
 @CrossOrigin(origins = "*")
@@ -46,5 +48,14 @@ public class leadController {
     @DeleteMapping("/deleteSingleLead/{id}")
     public ResponseEntity<?> deleteSingleLead(@PathVariable Integer id) {
         return leadService.deleteSingleLead(id);
+    }
+
+    @PatchMapping("/updateNextTime/{id}")
+    public ResponseEntity<?> updateNextFollowTime(@RequestParam String time , @PathVariable Integer id){
+        return leadService.updateNextFollowTime(time , id);
+    }
+    @GetMapping("/leadsAnalytics")
+    public ResponseEntity<?> leadsAnalytics(){
+        return leadService.leadAnalytics();
     }
 }

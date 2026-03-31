@@ -35,4 +35,19 @@ public class leadActivityService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+
+    public ResponseEntity<?> viewLeadActivitiesById(Integer leadId) {
+        try {
+            Optional<LeadEntity> isLead = leadRepo.findById(leadId);
+            if(isLead.isEmpty()){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("lead was not found ");
+            }
+            LeadEntity leadActivities = isLead.get();
+            leadActivities.getActivities();
+            return ResponseEntity.status(HttpStatus.OK).body(leadActivities);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+
+        }
+    }
 }

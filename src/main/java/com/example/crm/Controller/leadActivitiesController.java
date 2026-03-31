@@ -15,4 +15,8 @@ public class leadActivitiesController {
     public ResponseEntity<?> createActivity(@RequestBody leadActivityEntity activity, @PathVariable Integer leadId){
         return activityService.createActivity(activity,leadId);
     }
+    @GetMapping("/viewLeadActivitiesById/{leadId}")
+    public ResponseEntity<?> viewLeadActivitiesById(@PathVariable Integer leadId){
+        return activityService.viewLeadActivitiesById(leadId);
+    }
 }

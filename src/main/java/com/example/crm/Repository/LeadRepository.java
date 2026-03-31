@@ -19,4 +19,7 @@ public interface LeadRepository extends JpaRepository<LeadEntity, Integer> {
 
     @Query("select l.source , count(l) from LeadEntity  l  group by l.source ")
     List<Object[]> getLeadCountBySource();
+
+    Long countByFollowUpsNot(String followUps);
+    Long countByNextFollowDate(String nextFollowUps);
 }

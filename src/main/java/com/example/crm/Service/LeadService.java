@@ -1,5 +1,6 @@
 package com.example.crm.Service;
 
+import com.example.crm.DTO.LeadAnalyticsDTO;
 import com.example.crm.Model.CustomerEntity;
 import com.example.crm.Model.LeadEntity;
 import com.example.crm.Repository.CustomerRepository;
@@ -11,6 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -151,6 +155,40 @@ public class LeadService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lead not found");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    public ResponseEntity<?> updateNextFollowTime(String time, Integer id) {
+        try {
+            Optional<LeadEntity> isLead = leadRepo.findById(id);
+            if (isLead.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("lead is not found in this id :" + id);
+            }
+            LeadEntity updateTime = isLead.get();
+            updateTime.setNextFollowDate(time);
+            leadRepo.save(updateTime);
+            return ResponseEntity.status(HttpStatus.OK).body("time was updated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    public ResponseEntity<?> leadAnalytics() {
+        try {
+            String todayString = LocalDate.now().toString();
+
+            Long totalLead = leadRepo.count();
+            Long activeLead = leadRepo.countByFollowUpsNot("converted");
+           Long todayCount = leadRepo.countByNextFollowDate(todayString);
+
+            LeadAnalyticsDTO dto = new LeadAnalyticsDTO();
+            dto.setTotalLeads(totalLead);
+            dto.setActiveLead(activeLead);
+            dto.setTodayFollows(todayCount);
+            return ResponseEntity.status(HttpStatus.OK).body(dto);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+
         }
     }
 }
