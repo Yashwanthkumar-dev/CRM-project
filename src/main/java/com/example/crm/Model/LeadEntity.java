@@ -36,5 +36,8 @@ public class LeadEntity {
     @OneToMany(mappedBy = "lead" , cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<leadActivityEntity> activities;
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private EmployeeEntity employee;
 
 }

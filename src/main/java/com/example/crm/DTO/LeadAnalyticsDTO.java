@@ -11,4 +11,5 @@ public class LeadAnalyticsDTO {
     private Long totalLeads;
     private Long activeLead;
     private Long todayFollows;
+    private double leadPercentage;
 }

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/lead")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:5173")
 public class leadController {
     @Autowired
     private LeadService leadService;
@@ -58,4 +58,9 @@ public class leadController {
     public ResponseEntity<?> leadsAnalytics(){
         return leadService.leadAnalytics();
     }
+    @GetMapping("/leadSource")
+        public ResponseEntity<?> leadSourceData(){
+            return leadService.leadSourceData();
+        }
+
 }
