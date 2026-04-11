@@ -5,3 +5,7 @@ target
 build
 *.log
 .git/*
+**/.git
+**/.git/*
+**/node_modules
+**/target
