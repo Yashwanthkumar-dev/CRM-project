@@ -51,7 +51,7 @@ public class AuthController {
         EmployeeEntity emp = employee.get();
         if (passwordEncoder.matches(dto.getPassword(), emp.getPassword())) {
             String role = (emp.getRole()!= null ? emp.getRole():"EMPLOYEE");
-            String token = util.generateToken(emp.getEmail(), emp.getRole());
+            String token = util.generateToken(emp.getEmail(), "ROLE_" + role);
             Map<String, Object> response = new HashMap<>();
             response.put("token", token);
             response.put("role", role);

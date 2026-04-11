@@ -42,10 +42,13 @@ public class Filter extends OncePerRequestFilter {
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
-                filterChain.doFilter(request, response);
             }
-        } catch (UsernameNotFoundException e) {
-            throw new UsernameNotFoundException(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace(); // 🔥 add this
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            System.out.println("Security Filter Error :" + e.getMessage());
         }
+        filterChain.doFilter(request, response);
+
     }
 }

@@ -4,6 +4,7 @@ import com.example.crm.Model.LeadEntity;
 import com.example.crm.Service.LeadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -31,6 +32,7 @@ public class leadController {
     }
 
     @PostMapping("/convert/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> convertLeadToCustomer(@PathVariable Integer id) {
         return leadService.convertLeadToCustomer(id);
     }

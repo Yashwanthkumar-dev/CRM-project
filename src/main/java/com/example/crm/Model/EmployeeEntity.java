@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Base64; // 👈 1. Indha import-ah add panni iruken
 import java.util.List;
 
 @Entity
@@ -22,9 +23,22 @@ public class EmployeeEntity {
     private String email;
     private String password;
     private String role;
+    private String imageName;
+    private String imageType;
+
+    @Lob
+    @Column(name = "image_data", columnDefinition = "LONGBLOB")
+    private byte[] imageData;
+
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     @JsonIgnore
-    List<LeadEntity> leads;
+    private List<LeadEntity> leads;
 
 
+    public String getImageData() {
+        if (this.imageData != null) {
+            return Base64.getEncoder().encodeToString(this.imageData);
+        }
+        return null;
+    }
 }

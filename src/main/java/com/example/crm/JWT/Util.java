@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -12,8 +13,9 @@ import java.util.Date;
 
 @Component
 public class Util {
-    private final String SECRET_KEY = "LLWeVsZAIkIzl/i7fB37X3nIUKGdjh8aawsBkendgsA=";
-    private static final long EXPIRATION = 1000 * 60 * 60;
+    @Value("${spring.application.jwt.secret}")
+    private String SECRET_KEY;
+    private static final long EXPIRATION = 1000 * 60 * 60 *  24;
 
     public SecretKey getSignInkey() {
         byte[] keyBytes = SECRET_KEY.getBytes(StandardCharsets.UTF_8);
@@ -45,7 +47,7 @@ public class Util {
         }
     }
 
-    public String extractEmail(String token){
+    public String extractEmail(String token) {
         Claims claim = extractAllClaims(token);
         return claim.getSubject();
     }

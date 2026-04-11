@@ -19,4 +19,5 @@ public class leadActivitiesController {
     public ResponseEntity<?> viewLeadActivitiesById(@PathVariable Integer leadId){
         return activityService.viewLeadActivitiesById(leadId);
     }
+
 }
