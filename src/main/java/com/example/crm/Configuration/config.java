@@ -4,6 +4,7 @@ import com.example.crm.JWT.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -29,10 +30,11 @@ public class config {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOriginPatterns(Arrays.asList(
                 "http://localhost:5173",
-                "https://*.loca.lt"
+                "https://*.ngrok-free.app",
+                "https://*.ngrok-free.dev"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Bypass-Tunnel-Reminder"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Bypass-Tunnel-Reminder" , "ngrok-skip-browser-warning"));
         configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
@@ -50,7 +52,8 @@ public class config {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/register").permitAll()
+                        auth.requestMatchers(HttpMethod.OPTIONS ,"/**").permitAll()
+                                .requestMatchers("/register").permitAll()
                                 .requestMatchers("/employee/updateEmployeeToAdmin/**").hasRole("ADMIN")
                                 .requestMatchers("/login").permitAll()
                                 .anyRequest().authenticated()
