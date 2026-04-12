@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/lead")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 public class leadController {
     @Autowired
     private LeadService leadService;
